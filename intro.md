@@ -39,3 +39,17 @@ en horario de 10 a 14h
 - Hasta ahora usaba módulos, recientemente (v.17-18) se ha pasado a usar componentes standalone
 - Angular CLI: herramienta de línea de comandos para crear, gestionar y desplegar aplicaciones Angular
 - Entorno de testing unitario basado en Jasmine y Karma
+
+## Creación del proyecto
+
+```sh
+ng new ng18.indra ..create-application false
+cd ng18.indra
+ng g app demo1 --style css --ssr false -p ind -t -s
+git add .
+git commit -m "Add demo1 app"
+ng add @angular-eslint/schematics
+npm i -D prettier@latest
+git add .
+git commit -m "Add demo1 app"
+```
