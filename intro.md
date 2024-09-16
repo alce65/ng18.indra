@@ -10,10 +10,12 @@ en horario de 10 a 14h
 - Introducción a Angular 12.
 - TypeScript.
 - Requisitos, herramientas y configuración.
-- Introducción a los componentes.
-- Plantillas, interpolación y directivas.
-- Data Binding y Pipes.
-- Componentes anidados.
+
+- Componentes
+  - Introducción a los componentes.
+  - Plantillas, interpolación y directivas.
+  - Data Binding y Pipes.
+  - Componentes anidados.
 - Uso de servicios.
 - Rutas y navegación
 - Conocer la arquitectura de Angular 6
@@ -51,5 +53,7 @@ git commit -m "Add demo1 app"
 ng add @angular-eslint/schematics
 npm i -D prettier@latest
 git add .
-git commit -m "Add demo1 app"
+git commit -m "Add eslint & prettier"
 ```
+
+## TypeScript

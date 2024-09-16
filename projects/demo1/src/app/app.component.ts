@@ -1,17 +1,18 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { SampleComponent } from './compenents/sample/sample.component';
 
 @Component({
   selector: 'ind-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, SampleComponent],
   template: `
-    <h1>Welcome to {{ title }}!</h1>
-
+    <h1>{{ title }}!</h1>
+    <ind-sample />
     <router-outlet />
   `,
-  styles: [],
+  styles: ['h1 { font-family: Lato; color: blue; }'],
 })
 export class AppComponent {
-  title = 'demo1 - INDRA';
+  title = 'Curso de Angular 18 - INDRA';
 }
