@@ -22,6 +22,7 @@ export class AppComponent {
   title = 'Curso de Angular 18 - INDRA';
   menuOptions: MenuOption[] = [
     { label: 'Inicio', path: ['home'] },
+    { label: 'Contadores', path: 'counters' },
     { label: 'Acerca de', path: 'about' },
   ];
 }

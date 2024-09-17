@@ -9,6 +9,11 @@ export const routes: Routes = [
     title: 'Demo Angular - Inicio',
     loadComponent: () => import('./features/home/home.component'),
   },
+  {
+    path: 'counters',
+    title: 'Demo Angular - Contadores',
+    loadComponent: () => import('./features/counters/counters.component'),
+  },
   // { path: 'about', component: AboutComponent },
   {
     path: 'about',
