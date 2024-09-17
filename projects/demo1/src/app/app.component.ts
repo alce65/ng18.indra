@@ -1,18 +1,27 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { SampleComponent } from './compenents/sample/sample.component';
+import { MenuComponent } from './components/menu/menu.component';
+import { HeaderComponent } from './components/header/header.component';
+import { MenuOption } from './types/menu-option';
 
 @Component({
   selector: 'ind-root',
   standalone: true,
-  imports: [RouterOutlet, SampleComponent],
+  imports: [RouterOutlet, MenuComponent, HeaderComponent],
   template: `
-    <h1>{{ title }}!</h1>
-    <ind-sample />
+    <ind-header [appTitle]="title">
+      <p>Proyección de contenido</p>
+      <ind-menu [options]="menuOptions" />
+    </ind-header>
+
     <router-outlet />
   `,
-  styles: ['h1 { font-family: Lato; color: blue; }'],
+  styles: [],
 })
 export class AppComponent {
   title = 'Curso de Angular 18 - INDRA';
+  menuOptions: MenuOption[] = [
+    { label: 'Inicio', path: ['home'] },
+    { label: 'Acerca de', path: 'about' },
+  ];
 }

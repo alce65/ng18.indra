@@ -27,7 +27,8 @@ en horario de 10 a 14h
 ## Requisitos del equipo
 
 - Node.js - npm
-- VSC (Visual Studio Code)
+- VSC (Visual Studio Code) - Extensiones
+- Browser - Herramientas: Angular dev
 - Angular CLI: `npm i -g @angular/cli`
 
 ## Introducción
