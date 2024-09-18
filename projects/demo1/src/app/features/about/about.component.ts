@@ -1,16 +1,14 @@
 import { Component } from '@angular/core';
+import { LifeCycleComponent } from './life-cycle/life-cycle.component';
 
 @Component({
   selector: 'ind-about',
   standalone: true,
-  imports: [],
+  imports: [LifeCycleComponent],
   template: `
-    <p>
-      about works!
-    </p>
+    <h2>About</h2>
+    <ind-life-cycle />
   `,
-  styles: ``
+  styles: ``,
 })
-export default class AboutComponent {
-
-}
+export default class AboutComponent {}

@@ -14,7 +14,7 @@ import { FormsModule } from '@angular/forms';
       <p>Gracias por compartir tu nombre</p>
     }
     <input [placeholder]="placeholder" [(ngModel)]="user" />
-    <button (click)="onClick()">Borrar</button>
+    <button (click)="onClick($event)">Borrar</button>
   `,
   styles: ``,
 })
@@ -22,7 +22,8 @@ export class GreetingsComponent {
   user = '';
   placeholder = 'Dime tu nombre';
 
-  onClick() {
+  onClick(event: MouseEvent) {
     this.user = '';
+    console.log(event);
   }
 }
