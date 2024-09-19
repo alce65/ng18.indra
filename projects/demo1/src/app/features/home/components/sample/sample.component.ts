@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { SampleService } from '../../../../services/sample.service';
 
 @Component({
   selector: 'ind-sample',
@@ -20,6 +21,14 @@ export class SampleComponent {
     url: 'https://angular.io/assets/images/logos/angular/angular.png',
     alt: 'Angular Logo',
   };
+
+  private sample = inject(SampleService);
+
+  //s: SampleService;
+  constructor() {
+    console.log(this.sample.getValue());
+    //this.s = s
+  }
 
   changeTitle() {
     this.title = 'Angular ' + this.title;

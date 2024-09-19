@@ -9,6 +9,7 @@ import {
   // ContentChild,
   ElementRef,
 } from '@angular/core';
+import { SampleService } from '../../../services/sample.service';
 
 @Component({
   selector: 'ind-life-cycle',
@@ -18,6 +19,14 @@ import {
     <input type="text" placeholder="1" />
     <input #p1 type="text" placeholder="2" />`,
   styles: ``,
+  providers: [
+    {
+      provide: SampleService,
+      useValue: {
+        getValue: () => 23,
+      },
+    },
+  ],
 })
 export class LifeCycleComponent
   implements OnInit, OnChanges, AfterViewInit, AfterContentInit, OnDestroy
@@ -29,7 +38,7 @@ export class LifeCycleComponent
   @ViewChild(LifeCycleComponent) refPComponent: LifeCycleComponent | undefined;
   // @ContentChild() ref2!: any;
 
-  constructor() {
+  constructor(private sample: SampleService) {
     console.log('Constructor');
     console.log('P1', this.refP1);
     this.handleInterval = setInterval(() => {
@@ -43,6 +52,7 @@ export class LifeCycleComponent
     // and the first call to ngOnChanges.
     console.log('On Init');
     console.log('P1', this.refP1);
+    console.log(this.sample.getValue());
   }
 
   ngOnChanges(): void {
