@@ -16,6 +16,11 @@ export const routes: Routes = [
   },
   // { path: 'about', component: AboutComponent },
   {
+    path: 'notes',
+    title: 'Demo Angular - Notas',
+    loadComponent: () => import('./features/notes/notes.component'),
+  },
+  {
     path: 'about',
     title: 'Demo Angular - About',
     loadComponent: () => import('./features/about/about.component'),

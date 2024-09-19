@@ -4,14 +4,21 @@ import { MenuComponent } from './components/menu/menu.component';
 import { HeaderComponent } from './components/header/header.component';
 import { MenuOption } from './types/menu-option';
 import { FooterComponent } from './components/footer/footer.component';
+import { HighLightDirective } from './directives/high-light.directive';
 
 @Component({
   selector: 'ind-root',
   standalone: true,
-  imports: [RouterOutlet, MenuComponent, HeaderComponent, FooterComponent],
+  imports: [
+    RouterOutlet,
+    MenuComponent,
+    HeaderComponent,
+    FooterComponent,
+    HighLightDirective,
+  ],
   template: `
     <ind-header [appTitle]="title">
-      <p>Proyección de contenido</p>
+      <p [indHighLight]="'pink'">Proyección de contenido</p>
       <ind-menu [options]="menuOptions" />
     </ind-header>
 
@@ -25,6 +32,7 @@ export class AppComponent {
   menuOptions: MenuOption[] = [
     { label: 'Inicio', path: ['home'] },
     { label: 'Contadores', path: 'counters' },
+    { label: 'Notas', path: 'notes' },
     { label: 'Acerca de', path: 'about' },
   ];
 }
