@@ -4,7 +4,11 @@ import { MenuComponent } from './components/menu/menu.component';
 import { HeaderComponent } from './components/header/header.component';
 import { MenuOption } from './types/menu-option';
 import { FooterComponent } from './components/footer/footer.component';
-import { HighLightDirective } from './directives/high-light.directive';
+import {
+  HighLightAltDirective,
+  HighLightDirective,
+} from './directives/high-light.directive';
+import { TruncatePipe } from './pipes/truncate.pipe';
 
 @Component({
   selector: 'ind-root',
@@ -15,12 +19,17 @@ import { HighLightDirective } from './directives/high-light.directive';
     HeaderComponent,
     FooterComponent,
     HighLightDirective,
+    HighLightAltDirective,
+    TruncatePipe,
   ],
   template: `
     <ind-header [appTitle]="title">
       <p [indHighLight]="'pink'">Proyección de contenido</p>
+
       <ind-menu [options]="menuOptions" />
     </ind-header>
+
+    <p [indHighLightAlt]="'bisque'">{{ text | truncate: 20 }}</p>
 
     <router-outlet />
     <ind-footer />
@@ -35,4 +44,5 @@ export class AppComponent {
     { label: 'Notas', path: 'notes' },
     { label: 'Acerca de', path: 'about' },
   ];
+  text = 'Esto es un texto para probar directivas y pipes';
 }
