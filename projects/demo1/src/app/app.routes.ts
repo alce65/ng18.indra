@@ -21,6 +21,11 @@ export const routes: Routes = [
     loadComponent: () => import('./features/notes/notes.component'),
   },
   {
+    path: 'users',
+    title: 'Demo Angular - Users',
+    loadComponent: () => import('./features/users/users.component'),
+  },
+  {
     path: 'about',
     title: 'Demo Angular - About',
     loadComponent: () => import('./features/about/about.component'),

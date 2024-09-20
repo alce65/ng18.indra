@@ -42,6 +42,7 @@ export class AppComponent {
     { label: 'Inicio', path: ['home'] },
     { label: 'Contadores', path: 'counters' },
     { label: 'Notas', path: 'notes' },
+    { label: 'Usuarios', path: 'users' },
     { label: 'Acerca de', path: 'about' },
   ];
   text = 'Esto es un texto para probar directivas y pipes';
