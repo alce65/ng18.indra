@@ -4,19 +4,19 @@ import { Note } from '../../../entities/note';
 @Injectable({
   providedIn: 'root',
 })
-export class NotesStorageService {
+export class NotesAsyncStorageService {
   storageName = 'notes';
 
-  getNotes(): Note[] {
+  async getNotes(): Promise<Note[]> {
     const data = localStorage.getItem(this.storageName) ?? '[]';
     return JSON.parse(data);
   }
 
-  saveNotes(notes: Note[]): void {
+  async saveNotes(notes: Note[]): Promise<void> {
     localStorage.setItem(this.storageName, JSON.stringify(notes));
   }
 
-  deleteNotes(): void {
+  async deleteNotes(): Promise<void> {
     localStorage.removeItem(this.storageName);
   }
 }

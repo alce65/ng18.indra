@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Note } from '../../../entities/note';
 import { FormsModule } from '@angular/forms';
 
@@ -31,10 +31,14 @@ import { FormsModule } from '@angular/forms';
     }
   `,
 })
-export class NoteItemComponent {
+export class NoteItemComponent implements OnInit {
   @Input({ required: true }) item!: Note;
   @Output() deleteEvent = new EventEmitter<Note>();
   @Output() changeEvent = new EventEmitter<Note>();
+
+  ngOnInit(): void {
+    this.item = { ...this.item };
+  }
 
   sendDelete() {
     console.log('delete', this.item.id);

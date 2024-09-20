@@ -1,8 +1,17 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  inject,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Note } from '../../../entities/note';
 import { JsonPipe } from '@angular/common';
 import { NoteItemComponent } from '../note-item/note-item.component';
 import { NoteAddComponent } from '../note-add/note-add.component';
+import { NotesRxStorageService } from '../services/notes-rx-storage.service';
+// import { NotesStorageService } from '../services/notes-storage.service';
+// import { NotesAsyncStorageService } from '../services/notes-async-storage.service';
 
 const NOTES: Note[] = [
   {
@@ -37,7 +46,7 @@ const NOTES: Note[] = [
   },
 ];
 
-const getNotes = () =>
+const getNotes = (): Promise<Note[]> =>
   new Promise((resolve) => {
     setTimeout(() => {
       resolve(NOTES);
@@ -80,23 +89,54 @@ const getNotes = () =>
 export class NotesListComponent implements OnInit {
   notes: Note[] = [];
   @ViewChild('details') detailsRef!: ElementRef<HTMLDetailsElement>;
+  storage = inject(NotesRxStorageService);
 
   ngOnInit() {
     this.load();
   }
 
-  async load() {
-    this.notes = (await getNotes()) as Note[];
+  load() {
+    this.storage.getNotes().subscribe({
+      next: (notes) => {
+        this.notes = notes;
+        if (this.notes.length === 0) {
+          getNotes().then((notes) => {
+            this.notes = notes;
+            this.storage.saveNotes(this.notes).subscribe();
+          });
+        }
+      },
+      error: (error: Error) => {
+        console.log(error.message);
+      },
+    });
   }
 
   delete(note: Note) {
+    // Estrategia optimista
+    const oldNotes = this.notes;
     this.notes = this.notes.filter((n) => n.id !== note.id);
-    console.log(this.notes);
+    const subscription = this.storage.saveNotes(this.notes).subscribe({
+      error: (error: Error) => {
+        this.notes = oldNotes;
+        console.log(error.message);
+      },
+    });
+    subscription.unsubscribe();
   }
 
   update(note: Note) {
-    this.notes = this.notes.map((n) => (n.id === note.id ? note : n));
-    console.log(this.notes);
+    // Estrategia NO optimista
+    const newNotes = this.notes.map((n) => (n.id === note.id ? note : n));
+    const subscription = this.storage.saveNotes(newNotes).subscribe({
+      complete: () => {
+        this.notes = newNotes;
+      },
+      error: (error: Error) => {
+        console.log(error.message);
+      },
+    });
+    subscription.unsubscribe();
   }
 
   add(data: Pick<Note, 'title' | 'author'>) {
@@ -105,14 +145,18 @@ export class NotesListComponent implements OnInit {
       isImportant: false,
       ...data,
     };
+    const newNotes = [...this.notes, newNote];
 
-    // Immutable
-    this.notes = [...this.notes, newNote];
-
-    // Mutable
-    this.notes.push(newNote);
-
-    console.log(this.notes);
-    this.detailsRef.nativeElement.open = false;
+    const subscription = this.storage.saveNotes(newNotes).subscribe({
+      complete: () => {
+        this.notes = newNotes;
+        this.detailsRef.nativeElement.open = false;
+      },
+      error: (error: Error) => {
+        console.log(error.message);
+        this.detailsRef.nativeElement.open = false;
+      },
+    });
+    subscription.unsubscribe();
   }
 }
