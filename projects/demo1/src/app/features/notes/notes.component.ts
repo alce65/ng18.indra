@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NotesListComponent } from './notes-list/notes-list.component';
 
 @Component({
-  selector: 'ind-notes',
+  selector: 'ind-tasks',
   standalone: true,
   imports: [NotesListComponent],
   template: `

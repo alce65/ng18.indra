@@ -26,6 +26,11 @@ export const routes: Routes = [
     loadComponent: () => import('./features/users/users.component'),
   },
   {
+    path: 'tasks',
+    title: 'Demo Angular - Tareas',
+    loadComponent: () => import('./features/todo/tasks.component'),
+  },
+  {
     path: 'about',
     title: 'Demo Angular - About',
     loadComponent: () => import('./features/about/about.component'),

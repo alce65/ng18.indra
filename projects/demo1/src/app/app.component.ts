@@ -9,6 +9,7 @@ import {
   HighLightDirective,
 } from './directives/high-light.directive';
 import { TruncatePipe } from './pipes/truncate.pipe';
+import { environment } from '../environments/environment.development';
 
 @Component({
   selector: 'ind-root',
@@ -42,8 +43,15 @@ export class AppComponent {
     { label: 'Inicio', path: ['home'] },
     { label: 'Contadores', path: 'counters' },
     { label: 'Notas', path: 'notes' },
+    { label: 'Tareas', path: 'tasks' },
     { label: 'Usuarios', path: 'users' },
     { label: 'Acerca de', path: 'about' },
   ];
   text = 'Esto es un texto para probar directivas y pipes';
+
+  urlAPi = environment.urlBase;
+
+  constructor() {
+    console.log('URL API:', this.urlAPi);
+  }
 }
