@@ -1,29 +1,48 @@
+import { JsonPipe } from '@angular/common';
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'ind-register-rx',
+  selector: 'ind-register-td',
   standalone: true,
-  imports: [],
+  imports: [FormsModule, JsonPipe],
   template: `
-    <h3>Register-rx</h3>
-    <form>
+    <h3>Register template driven</h3>
+    <form #registerForm="ngForm" (ngSubmit)="register(registerForm.value)">
       <div class="form-group">
         <label>
           <span>Name:</span>
-          <input type="text" name="name" />
+          <input type="text" name="name" ngModel required />
         </label>
       </div>
       <div class="form-group">
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required />
+        <input
+          type="email"
+          id="email"
+          name="email"
+          ngModel
+          required
+          email
+          #emailControl="ngModel"
+        />
       </div>
+
+      @if (emailControl.invalid && emailControl.touched) {
+        <!-- @if (registerForm.controls.email.errors?.["required"]) { -->
+        @if (emailControl.hasError('required')) {
+          <p class="error">El correo es obligatorio</p>
+        } @else {
+          <p class="error">El formato del correo no es correcto</p>
+        }
+      }
       <div class="form-group">
         <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required />
+        <input type="password" id="password" name="password" ngModel />
       </div>
       <div class="form-group">
         <label>
-          <input type="checkbox" name="confirm" />
+          <input type="checkbox" name="confirm" ngModel />
           <span>Estoy de acuerdo con....:</span>
         </label>
       </div>
@@ -31,7 +50,7 @@ import { Component } from '@angular/core';
         <legend>Turno</legend>
         @for (turno of turnos; track turno.value) {
           <label>
-            <input type="radio" name="turn" value="{{ turno.value }}" />
+            <input type="radio" name="turn" value="{{ turno.value }}" ngModel />
             <span>{{ turno.label }}</span>
           </label>
         }
@@ -39,15 +58,16 @@ import { Component } from '@angular/core';
       <div class="form-group">
         <label>
           <span>Curso:</span>
-          <select name="course">
+          <select name="course" ngModel>
             @for (curso of cursos; track curso.value) {
               <option [value]="curso.value">{{ curso.label }}</option>
             }
           </select>
         </label>
       </div>
-      <button type="submit">Register</button>
+      <button type="submit" [disabled]="registerForm.invalid">Register</button>
     </form>
+    <pre>{{ registerForm.value | json }}</pre>
   `,
   styles: `
     :host {
@@ -59,7 +79,7 @@ import { Component } from '@angular/core';
     }
   `,
 })
-export class RegisterRxComponent {
+export class RegisterTdComponent {
   turnos = [
     { value: 'morning', label: 'Mañana' },
     { value: 'afternoon', label: 'Tarde' },
@@ -70,4 +90,8 @@ export class RegisterRxComponent {
     { value: 'react', label: 'React 19' },
     { value: 'vue', label: 'Vue 18' },
   ];
+
+  register(data: Record<'string', unknown>) {
+    console.log('Enviando', data);
+  }
 }
