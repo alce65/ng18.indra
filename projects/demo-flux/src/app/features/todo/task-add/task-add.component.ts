@@ -1,7 +1,8 @@
-import { Component, ElementRef, inject, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, viewChild } from '@angular/core';
 import { Task } from '../../../entities/task';
 import { FormsModule } from '@angular/forms';
-import { TaskStateService } from '../../../services/task-state.service';
+// import { TaskStateService } from '../../../services/task-state.service';
+import { TaskStateSignalsService } from '../../../services/task-state-signals.service';
 
 @Component({
   selector: 'ind-task-add',
@@ -18,17 +19,18 @@ import { TaskStateService } from '../../../services/task-state.service';
   styles: ``,
 })
 export class TaskAddComponent {
-  private taskService = inject(TaskStateService);
+  // private taskService = inject(TaskStateService);
+  private taskService = inject(TaskStateSignalsService);
   // @Output() addEvent = new EventEmitter<Pick<Task, 'title' | 'owner'>>();
   data: Pick<Task, 'title' | 'owner'> = {
     title: '',
     owner: '',
   };
-  @ViewChild('details') detailsRef!: ElementRef<HTMLDetailsElement>;
+  detailsRef = viewChild<ElementRef<HTMLDetailsElement>>('details');
 
   sendAdd() {
     // this.addEvent.emit(this.data);
-    this.detailsRef.nativeElement.open = false;
+    this.detailsRef()!.nativeElement.open = false;
     this.taskService.add(this.data);
   }
 }

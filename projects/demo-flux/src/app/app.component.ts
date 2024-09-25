@@ -37,6 +37,8 @@ export class AppComponent {
   menuOptions: MenuOption[] = [
     { label: 'Inicio', path: ['home'] },
     { label: 'Tareas', path: 'tasks' },
+    { label: 'Contadores', path: 'counters' },
+    { label: 'Notas', path: 'notes' },
   ];
   text = 'Esto es un texto para probar directivas y pipes';
 }
