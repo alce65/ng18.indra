@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { Task } from '../../../entities/task';
 import { FormsModule } from '@angular/forms';
+import { TaskStateService } from '../../../services/task-state.service';
 
 @Component({
   selector: 'ind-task-item',
@@ -33,20 +34,23 @@ import { FormsModule } from '@angular/forms';
 })
 export class TaskItemComponent implements OnInit {
   @Input({ required: true }) item!: Task;
-  @Output() deleteEvent = new EventEmitter<Task>();
-  @Output() changeEvent = new EventEmitter<Task>();
+  private taskService = inject(TaskStateService);
+  // @Output() deleteEvent = new EventEmitter<Task>();
+  // @Output() changeEvent = new EventEmitter<Task>();
 
   ngOnInit(): void {
     this.item = { ...this.item };
   }
 
   sendDelete() {
-    console.log('delete', this.item.id);
-    this.deleteEvent.emit(this.item);
+    // this.deleteEvent.emit(this.item);
+    this.taskService.delete(this.item);
   }
 
   sendChange() {
-    console.log('change', this.item);
-    this.changeEvent.emit(this.item);
+    // this.changeEvent.emit(this.item);
+    const data = this.item;
+    // this.item.isCompleted = !this.item.isCompleted;
+    this.taskService.update(data);
   }
 }
